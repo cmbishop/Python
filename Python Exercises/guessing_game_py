@@ -1,0 +1,35 @@
+import random
+
+def func():
+    a = True
+    while a:
+        try:
+            guess = int(raw_input("Take a guess. "))
+            a = False
+        except ValueError:
+            print "That's not a number! Try again!"
+        return guess
+
+guesses_taken = 0
+guesses_left = 7
+
+name = raw_input("Hello! What is your name? ")
+number = random.randint(1, 100)
+print "Hello %s! Let's play a game. I am thinking of a number between 1 and 100." % name
+
+while guesses_taken <7:
+    guess = func()
+
+    guesses_taken = guesses_taken + 1
+    guesses_left = guesses_left - 1
+    guessed_correct = "You guessed my number!"
+
+    if guess < number:
+        print "Your guess is too low. You have %s guesses left!" % guesses_left
+
+    if guess > number:
+        print "Your guess is too high. You have %s guesses left!" % guesses_left
+
+    if guess == number:
+        print guessed_correct
+        break

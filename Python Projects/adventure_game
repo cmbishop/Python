@@ -1,0 +1,159 @@
+import random
+import time
+import webbrowser
+
+# This is the random roll generator
+def die_roll():
+    # Added a return of the result so we can save that value to our game.
+    print "Roll the dice, Dennis.\n"
+    result = random.randint(1, 6)
+    print ".... now rolling ....\n"
+    time.sleep(3)
+    if result == 1:
+        print ("-----------")
+        print ("-         -")
+        print ("-    o    -")
+        print ("-         -")
+        print ("-----------")
+        mon1.hp = 3
+        combat(player, mon1)
+        return result
+    if result == 2:
+        print ("-----------")
+        print ("-       o -")
+        print ("-         -")
+        print ("- o       -")
+        print ("-----------")
+        mon2.hp = 6
+        combat(player, mon2)
+        return result
+    if result == 3:
+        print ("-----------")
+        print ("-       o -")
+        print ("-    o    -")
+        print ("- o       -")
+        print ("-----------")
+        mon3.hp = 9
+        combat(player, mon3)
+        return result
+    if result == 4:
+        print ("-----------")
+        print ("- o     o -")
+        print ("-         -")
+        print ("- o     o -")
+        print ("-----------")
+        mon4.hp = 12
+        combat(player, mon4)
+        return result
+    if result == 5:
+        print ("-----------")
+        print ("- o     o -")
+        print ("-    o    -")
+        print ("- o     o -")
+        print ("-----------")
+        mon5.hp = 15
+        combat(player, mon5)
+        return result
+    if result == 6:
+        print ("-----------")
+        print ("- o     o -")
+        print ("- o     o -")
+        print ("- o     o -")
+        print ("-----------")
+        mon6.hp = 18
+        combat(player, mon6)
+        return result
+
+
+class Player:
+    def __init__(self, name, speech, hp=200, damage=3):
+        self.name = name
+        self.hp = hp
+        self.damage = damage
+        self.speech = speech
+
+def encounter():
+    pass
+
+def combat(p, m):
+    print m.speech[0]
+    while m.hp > 0:
+        x = random.randrange(1, len(m.speech))
+        print m.speech[x]
+        pause = raw_input("Press enter to attack!\n> ")
+        print "You attack for 3 damage.\n"
+        print "The %s attacks for %s damage.\n" % (m.name, m.damage)
+        p.hp -= m.damage
+        print "%s health is \n" % p.name + str(p.hp)
+        m.hp -= p.damage
+        print "%s health is \n" % m.name + str(m.hp)
+        print""
+        if m.hp <= 0:
+            print "You have vanquished your foe!\n"
+        if p.hp <= 0:
+            print "You have succumbed to the perils of the dungeon!"
+            print
+            quit()
+
+# gives individual monster's names an own health
+mon1 = Player("evil boll weevil", ["You encounter an evil boll weevil!\n", "The boll weevil hisses menacingly.\n",
+                                   "Hssss goes the boll weevil!\n"], 3, 1)
+mon2 = Player("evil gerbil", ["You encounter an evil gerbil!\n", "It stares, chattering it's evil teeth.\n",
+                              "Squeak squeak, says the vicious rodent.\n"], 6, 2)
+mon3 = Player("evil tabby cat", ["You encounter an evil tabby cat!\n", "The feline hacks up an evil fur ball!\n",
+                                 "The beast is attacking your vulnerable shins!\n"], 9, 3)
+mon4 = Player("evil pony", ["You encounter an evil pony!\n", "The evil pony whinnies and neighs.... evilly.\n",
+                            "The evil pony stomps. CLOMP CLOMP!\n"], 12, 4)
+mon5 = Player("evil stranger", ["You encounter an evil stranger! He offers you candy.\n",
+                                "The evil stranger pokes fun at your mother.\n",
+                                "Oh no! The evil stranger has stolen all of your travellers checks!\n"], 15, 5)
+mon6 = Player("evil Elvis Presley impersonator",
+              ["You encounter an evil Elvis Presley impersonator!\n", "He attempts to bash you with a guitar!\n",
+               "His sequins shine gloriously!", "The Fake King shakes his hips vigorously.\n"], 18, 5)
+
+player = Player("Dennis", [])
+
+# This to set the conditionals of continuing the game or ending it
+# Set as function so we can call it when we are ready.
+def game():
+    # rolls_in_game holds a list of all rolls made in the game so far. We start it off empty.
+    rolls_in_game = []
+    # We check to see if the sum of all numbers listed in rolls_in_game are less or equal to 50
+    while sum(rolls_in_game) <= 40:
+        # Roll the dice
+        roll = die_roll()
+        # Tell the user what they rolled
+        print "You have rolled a %s!\n" % roll
+        print "You move ahead %s space(s).\n" % roll
+        # Add the rolled number to the end of the rolls_in_game list
+        rolls_in_game.append(roll)
+        # pause is an empty variable to a raw input that asks the user to hit enter to roll the next dice. We do this so
+        # that the user controls when the loop continues.
+        pause = raw_input('Press Enter to Roll again.\n')
+        # Again we are checking to see if they have rolled a total of fifty or not.
+        if sum(rolls_in_game) <= 40:
+            print "You must continue exploring the cave ahead to reach the exit.\n"
+        else:
+            print "Your total die rolls are 40 or greater! You have made your way out of the cave. "
+            webbrowser.open("http://www.quickmeme.com/img/b7/b7206150806bb17c9c0dce0f0d978cd60f0a8a9ac4e066c9f5c34246d084142c.jpg")
+
+
+print ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+print ("~                  Welcome to...               ~  ")
+print ("~              ADVENTURE DUNGEON               ~  ")
+print ("~           THE TEXT! THE GRAPHICS!            ~  ")
+print ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+
+# This is basically nonsense
+name = raw_input('Welcome to this awful adventure. Please enter your name to get started: \n')
+print "\n%s? I don't like that name. \n" % name
+name1 = raw_input('Try again: \n')
+print "\nNo, still not that good, is it?\n"
+name2 = raw_input('Go ahead - one more time:\n')
+print "\n%s?! Really? That's the best you can do? You know what - just forget it. You will be called Dennis. \n" % name2
+time.sleep(2)
+print "I happen to like Dennis. It's a good name. Regal. It's nice to meet you.... Dennis. \n"
+print "You begin your adventure peering into a long, gloomy cave. You move by rolling a 6-sided dice.\n"
+print "You will encounter random enemies along the way. If your combined rolls equal 40 or more, you win!\n"
+decision = raw_input("So Dennis, press that enter button! That's if you're not chicken! Bawk Bawk Bawk!: \n")
+game()
